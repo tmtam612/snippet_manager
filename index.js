@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.json());
 // for parsing multipart/form-data
 // app.use(upload.array()); 
-
+mongoose.set('debug', true);
 app.use('/users', require('./routers/userRouter'));
 
 mongoose.connect(process.env.MDB_CONNECT_STRING, {

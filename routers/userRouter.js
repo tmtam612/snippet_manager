@@ -53,12 +53,15 @@ router.post("/addUser", async (req, res) => {
                     }
                     fs.mkdirSync('./uploads/'+ savedUser._id);
                 }
-                const oldpath = files.image.path;
-                const newpath = './uploads/'+ savedUser._id +'/'+ files.image.name;
-                await fs.rename(oldpath, newpath, (err) => {
-                    if (err) throw err;
-                    res.end();
-                });
+                if (files.image) {
+                    const oldpath = files.image.path;
+                    const newpath = './uploads/'+ savedUser._id +'/'+ files.image.name;
+                    await fs.rename(oldpath, newpath, (err) => {
+                        if (err) throw err;
+                        res.end();
+                    });
+                }
+                
                 await session.commitTransaction();
                 session.endSession();
                 return res.send({'status': true});
