@@ -8,3 +8,6 @@
 5. pass connect string 
 -> env.config()
 -> process.env.MDB_CONNECT_STRING
+
+
+*caution: virtual field khởi tạo không dùng arrow function
