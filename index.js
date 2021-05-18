@@ -4,6 +4,7 @@ const env = require('dotenv');
 const cors = require('cors');
 const bodyParser= require('body-parser');
 const cookieParser = require('cookie-parser');
+const User = require('./models/userModel');
 
 env.config();
 const app = express();
@@ -24,7 +25,48 @@ app.use(express.json());
 // app.use(upload.array()); 
 mongoose.set('debug', true);
 app.use('/users', require('./routers/userRouter'));
-app.use('/login', require('./middleware/auth'),(req, res) => {
+app.post('/login', async (req, res) => {
+    try {
+        const { user_name, password } = req.body;
+
+        // validation
+    
+        if (!user_name || !password)
+          return res.status(400).json({
+            errorMessage: "Please enter all required fields.",
+          });
+    
+        // get user account
+    
+        const existingUser = await User.findOne({ user_name });
+        if (!existingUser)
+          return res.status(401).json({
+            errorMessage: "Wrong email or password.",
+          });
+
+    
+        if (password != existingUser.password)
+          return res.status(401).json({
+            errorMessage: "Wrong email or password.",
+          });
+    
+        // create a JWT token
+    
+        const token = jwt.sign(
+          {
+            id: existingUser._id,
+          },
+          process.env.JWT_SECRET
+        );
+    
+        res
+          .cookie("token", token, {
+            httpOnly: true,
+          })
+          .send();
+    } catch (err) {
+
+    }
     return res.json({status: true});
 });
 
