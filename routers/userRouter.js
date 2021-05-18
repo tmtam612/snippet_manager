@@ -4,9 +4,9 @@ const mongoose = require("mongoose");
 const transporter = require("../transporter");
 const formidable = require('formidable');
 const fs = require('fs');
+const auth = require('../middleware/auth');
 
-
-router.post("/addUser", async (req, res) => {
+router.post("/addUser", auth, async (req, res) => {
     try {
         const form = new formidable.IncomingForm();
         form.parse(req, async (err, fields, files) => {
@@ -82,7 +82,7 @@ router.post("/addUser", async (req, res) => {
     }
 });
 
-router.get("/getUsers", async (req, res) => {
+router.get("/getUsers", auth, async (req, res) => {
     try {
         const result = await User.find().select({'password': 0}).then((res) => {
             return res.map((value) => {
@@ -96,5 +96,4 @@ router.get("/getUsers", async (req, res) => {
         return res.send({status: false, 'errorMessage': 'There is error in server'});
     }
 });
-
 module.exports = router;
