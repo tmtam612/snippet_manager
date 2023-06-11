@@ -14,8 +14,8 @@ const corConfig = {
 };
 app.use(cookieParser());
 app.use(cors(corConfig));
-
-app.listen(5000, () => {
+const port = process.env.PORT || 1337;
+app.listen(port, () => {
     console.log('server start');
 });
 app.use(bodyParser.urlencoded({ extended: true }));
