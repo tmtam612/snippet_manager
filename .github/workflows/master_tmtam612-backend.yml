@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'tmtam612-backend'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_AB4DA495A8E64C0385FA458802E6AA50 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_CAFEC5B1FA7148FFBB5B0B1665B52AB2 }}
           package: .
