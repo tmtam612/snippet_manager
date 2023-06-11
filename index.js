@@ -9,7 +9,7 @@ const User = require('./models/userModel');
 env.config();
 const app = express();
 const corConfig = {
-    origin: ['http://localhost:3000'],
+    origin: ['*'],
     credential: true,
 };
 app.use(cookieParser());
@@ -24,9 +24,6 @@ app.use(express.json());
 // for parsing multipart/form-data
 // app.use(upload.array());
 mongoose.set('debug', true);
-app.use('/', (req, res) => {
-    res.json({ message: 'Hello World!' });
-});
 app.use('/users', require('./routers/userRouter'));
 app.post('/login', async (req, res) => {
     try {
