@@ -25,7 +25,7 @@ app.use(express.json());
 // app.use(upload.array());
 mongoose.set('debug', true);
 app.use('/', (req, res) => {
-    res.send({ message: 'Hello World!' });
+    res.json({ message: 'Hello World!' });
 });
 app.use('/users', require('./routers/userRouter'));
 app.post('/login', async (req, res) => {
